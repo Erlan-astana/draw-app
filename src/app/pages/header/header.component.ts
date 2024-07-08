@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { DrawingService } from 'src/app/shared/services/drawing.service';
+import { Store } from '@ngrx/store';
+import { setColor, setTool } from 'src/app/store/actions/canvas.actions';
 
 @Component({
   selector: 'app-header',
@@ -12,9 +13,13 @@ export class HeaderComponent {
     '#EC4899', '#F43F5E', '#D946EF', '#0EA5E9', '#10B981', '#84CC16'
   ];
 
-  constructor(private drawingService: DrawingService) { }
+  constructor(private store: Store<CanvasState>) { }
 
   selectColor(color: string): void {
-    this.drawingService.setColor(color);
+    this.store.dispatch(setColor({ color }));
+  }
+
+  setTool(tool: string): void {
+    this.store.dispatch(setTool({ tool }));
   }
 }

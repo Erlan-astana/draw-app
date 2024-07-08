@@ -1,6 +1,26 @@
-<header class="header">
-  <h1>Canva</h1>
-  <div>
+<header>
+  <div class="title-box">
+    <img src="../../../assets/images/logo.svg" alt="logo" />
+    <span class="title-text">Canva</span>
+  </div>
+  <div class="wrapper">
+    <div class="tools">
+      <img
+        src="../../../assets/images/ellipse.svg"
+        alt="ellipse"
+        (click)="setTool('circle')"
+      />
+      <img
+        src="../../../assets/images/square.svg"
+        alt="square"
+        (click)="setTool('square')"
+      />
+      <img
+        src="../../../assets/images/line.svg"
+        alt="line"
+        (click)="setTool('line')"
+      />
+    </div>
     <div class="colors">
       <div
         class="color-element"

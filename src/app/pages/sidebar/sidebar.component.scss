@@ -1,5 +1,35 @@
 .sidebar {
   background-color: #f1f2f7;
-  width: 200px;
+  width: 240px;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 50px 10px;
+
+  ul {
+    list-style-type: none;
+
+    li {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 90px;
+      margin-bottom: 7px;
+    }
+  }
+
+  .type {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .text {
+    font-family: Poppins;
+    color: #5a6acf;
+  }
+
+  .delete {
+    cursor: pointer;
+  }
 }

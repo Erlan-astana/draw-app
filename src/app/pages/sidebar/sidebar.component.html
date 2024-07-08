@@ -1,1 +1,31 @@
-<div class="sidebar">sidebar</div>
+<div class="sidebar">
+  <ul>
+    <li *ngFor="let shape of shapes$ | async">
+      <div class="type">
+        <ng-container [ngSwitch]="shape.type">
+          <img
+            *ngSwitchCase="'circle'"
+            src="../../../assets/images/ellipse.svg"
+            alt="ellipse"
+          />
+          <img
+            *ngSwitchCase="'square'"
+            src="../../../assets/images/square.svg"
+            alt="square"
+          />
+          <img
+            *ngSwitchCase="'line'"
+            src="../../../assets/images/line.svg"
+            alt="line"
+          />
+        </ng-container>
+        <span class="text">{{ shape.type }}</span>
+      </div>
+      <img
+        class="delete"
+        src="../../../assets/images/image.svg"
+        (click)="deleteShape(shape.id)"
+      />
+    </li>
+  </ul>
+</div>
