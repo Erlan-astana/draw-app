@@ -1,0 +1,13 @@
+<header class="header">
+  <h1>Canva</h1>
+  <div>
+    <div class="colors">
+      <div
+        class="color-element"
+        *ngFor="let color of colors"
+        [style.background]="color"
+        (click)="selectColor(color)"
+      ></div>
+    </div>
+  </div>
+</header>
