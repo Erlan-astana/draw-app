@@ -16,6 +16,5 @@ export class HeaderComponent {
 
   selectColor(color: string): void {
     this.drawingService.setColor(color);
-    console.log(`Selected color: ${color}`);
   }
 }

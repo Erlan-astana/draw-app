@@ -1,5 +1,19 @@
 <div class="canvas-container">
   canvas
   <div>canvas</div>
-  <canvas></canvas>
+  <div class="tools">
+    <button (click)="setTool('square')">Квадрат</button>
+    <button (click)="setTool('circle')">Круг</button>
+    <button (click)="setTool('line')">Линия</button>
+    <input type="color" (input)="setColor($event.target)" />
+    <button (click)="clearCanvas()">Очистить</button>
+  </div>
+  <canvas
+    #canvas
+    width="800"
+    height="600"
+    (mousedown)="startDrawing($event)"
+    (mouseup)="stopDrawing()"
+    (mousemove)="draw($event)"
+  ></canvas>
 </div>
