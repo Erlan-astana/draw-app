@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { addShape, clearCanvas, updateShapeColor, deleteShape, setTool, setColor } from '../actions/canvas.actions';
+import { addShape, updateShapeColor, deleteShape, setTool, setColor } from '../actions/canvas.actions';
 import { Shape } from '../../models/shape.model';
 
 export interface CanvasState {
@@ -19,11 +19,6 @@ export const canvasReducer = createReducer(
     on(addShape, (state, { shape }) => ({
         ...state,
         shapes: [...state.shapes, shape]
-    })),
-    on(clearCanvas, state => ({
-        ...state,
-        shapes: [],
-        color: 'rgba(255, 255, 255, 0)'
     })),
     on(updateShapeColor, (state, { id, color }) => ({
         ...state,

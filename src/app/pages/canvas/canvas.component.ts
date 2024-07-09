@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { Shape } from 'src/app/models/shape.model';
-import { addShape, clearCanvas, updateShapeColor, deleteShape } from 'src/app/store/actions/canvas.actions';
+import { addShape, updateShapeColor, setColor } from 'src/app/store/actions/canvas.actions';
 import { selectColor, selectShapes, selectTool } from 'src/app/store/selectors/canvas.selectors';
 
 @Component({
@@ -19,7 +19,6 @@ export class CanvasComponent implements OnInit {
   private startY!: number;
   private endX!: number;
   private endY!: number;
-  private lastShapeId: number | null = null;
   tool$!: Observable<string>;
   color$!: Observable<string>;
   shapes$!: Observable<Shape[]>;
@@ -40,17 +39,9 @@ export class CanvasComponent implements OnInit {
     });
   }
 
-  startDrawing(event: MouseEvent) {
-    this.drawing = true;
-    const rect = this.canvas.nativeElement.getBoundingClientRect();
-    this.startX = event.clientX - rect.left;
-    this.startY = event.clientY - rect.top;
-  }
-
   stopDrawing() {
     if (this.drawing) {
       this.drawing = false;
-
       const width = this.endX - this.startX;
       const height = this.endY - this.startY;
 
@@ -69,7 +60,6 @@ export class CanvasComponent implements OnInit {
           };
 
           this.store.dispatch(addShape({ shape: newShape }));
-          this.lastShapeId = newShape.id;
         });
       });
     }
@@ -80,6 +70,13 @@ export class CanvasComponent implements OnInit {
     this.startY = 0;
 
     this.ctx.beginPath();
+  }
+
+  startDrawing(event: MouseEvent) {
+    this.drawing = true;
+    const rect = this.canvas.nativeElement.getBoundingClientRect();
+    this.startX = event.clientX - rect.left;
+    this.startY = event.clientY - rect.top;
   }
 
   draw(event: MouseEvent) {
@@ -108,8 +105,8 @@ export class CanvasComponent implements OnInit {
             this.ctx.strokeRect(this.startX, this.startY, width, height);
             break;
           case 'circle':
-            const radius = Math.sqrt(width * width + height * height);
-            this.ctx.arc(this.startX, this.startY, radius, 0, Math.PI * 2);
+            const radius = Math.sqrt(width * width + height * height) / 2;
+            this.ctx.arc(this.startX + width / 2, this.startY + height / 2, radius, 0, Math.PI * 2);
             this.ctx.fill();
             this.ctx.stroke();
             break;
@@ -137,6 +134,7 @@ export class CanvasComponent implements OnInit {
             id: shape.id,
             color: color
           }));
+          this.store.dispatch(setColor({ color: 'rgba(0,0,0,0)' }));
         });
       }
     });
@@ -161,11 +159,6 @@ export class CanvasComponent implements OnInit {
       default:
         return false;
     }
-  }
-
-  clearCanvas() {
-    this.ctx.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
-    this.store.dispatch(clearCanvas());
   }
 
   private redraw() {
@@ -198,4 +191,5 @@ export class CanvasComponent implements OnInit {
       });
     });
   }
+
 }

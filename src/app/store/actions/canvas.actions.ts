@@ -6,8 +6,6 @@ export const addShape = createAction(
     props<{ shape: Shape }>()
 );
 
-export const clearCanvas = createAction('[Canvas] Clear Canvas');
-
 export const updateShapeColor = createAction(
     '[Canvas] Update Shape Color',
     props<{ id: number; color: string }>()
